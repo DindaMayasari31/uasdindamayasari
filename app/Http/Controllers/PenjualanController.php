@@ -10,7 +10,10 @@ class PenjualanController extends Controller
     public function index()
     {
         $penjualan = Penjualan::all();
-        return view('penjualan.index', compact('penjualan'));
+        $total = Penjualan::all()->sum(function($item) {
+            return $item->harga * $item->jumlah;
+        });
+        return view('penjualan.index', compact('penjualan', 'total'));
     }
 
     public function create()
